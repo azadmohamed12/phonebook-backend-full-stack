@@ -1,11 +1,15 @@
 const express = require("express");
+const morgan = require('morgan');
 const app = express();
+
 app.use(express.json())
 
 
 app.use(express.static('dist'))
 
-
+morgan.token('body', (req) => {
+  return req.method === 'POST' ? JSON.stringify(req.body) : '';
+});
 
 let persons = [
     { 
