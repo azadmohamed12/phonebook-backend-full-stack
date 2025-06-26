@@ -1,0 +1,37 @@
+### Add a valid person (should succeed)
+get http://localhost:3001/api/persons
+
+
+### Missing name (should fail)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "number": "123-456-789"
+}
+
+### Missing number (should fail)
+POST http://localhost:3005/api/persons
+Content-Type: application/json
+
+{
+  "name": "No Number"
+}
+
+### Duplicate name (should fail)
+POST http://localhost:3005/api/persons
+Content-Type: application/json
+
+{
+  "name": "azad",
+  "number": "000-000-000"
+}
+###
+POST /api/persons 400
+###
+POST /api/persons 400
+###
+POST /api/persons 400
+
+
+
