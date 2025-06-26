@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
-const cors = require('cors')
+app.use(express.json())
 
-const morgan = require('morgan')
-morgan.token('body', (req) => {
-  return req.method === 'POST' ? JSON.stringify(req.body) : '';
-});
+
+app.use(express.static('dist'))
+
+
 
 let persons = [
     { 
@@ -36,8 +36,7 @@ const requestLogger = (request, response, next) => {
   console.log('---')
   next()
 }
-app.use(express.json())
-app.use(cors())
+
 app.use(requestLogger)
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
@@ -101,11 +100,12 @@ id: String(maxId + 1)
  
 })
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
+const path = require('path');
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
 
-app.use(unknownEndpoint)
+
 
 const PORT =  process.env.PORT  || 3001;
 app.listen(PORT, ()=>{
