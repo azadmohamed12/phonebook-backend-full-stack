@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "start": "node index.js",
+  "dev": "node --watch index.js",
+  "build:ui": "powershell -Command \"if (Test-Path dist) { Remove-Item -Recurse -Force dist }; cd 'C:/Users/Admin/my-react-app'; npm run build; Copy-Item -Recurse dist 'C:/Users/Admin/Documents/backend-phonebook/dist'\"",
+  "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
